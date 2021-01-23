@@ -48,13 +48,17 @@ class Game
         }
     }
 
-    play()
+    playGame()
     {
         if(gameState == 1)
         {
             background(rgb(198,135,103));
             imageMode(CENTER);
             image(bg2,displayWidth/2,-displayHeight*2,displayWidth,displayHeight*4);
+
+            //carSoundEffect.play();
+
+            player.getRank();
 
             var y;
             var x = 150;
@@ -86,19 +90,19 @@ class Game
                     camera.position.x = displayWidth/2
                     camera.position.y = cars[index-1].y;
 
-                    player.x = cars[index-1].x;
-                    player.y = cars[index-1].y;
-                    player.updatePosition();
+                    // player.x = cars[index-1].x;
+                    // player.y = cars[index-1].y;
+                    // player.updatePosition();
 
-                    if(keyIsDown(RIGHT_ARROW) && player.index!= null && gameState ==1)
-                    {
-                        cars[index-1].x += 10;
-                    }
+                    // if(keyIsDown(RIGHT_ARROW) && player.index!= null && gameState ==1)
+                    // {
+                    //     cars[index-1].x += 10;
+                    // }
 
-                    if(keyIsDown(LEFT_ARROW) && player.index!= null && gameState ==1)
-                    {
-                        cars[index-1].x -= 10;
-                    }
+                    // if(keyIsDown(LEFT_ARROW) && player.index!= null && gameState ==1)
+                    // {
+                    //     cars[index-1].x -= 10;
+                    // }
 
                     ellipseMode(CENTER);
                     fill("red");
@@ -113,42 +117,11 @@ class Game
                 }
             }
             drawSprites();
-
-            // if( Allplayers[1].distance !=  null &&
-            //     Allplayers[2].distance !=  null &&
-            //     Allplayers[3].distance !=  null &&
-            //     Allplayers[4].distance !=  null)
-            //     {
-            //         x += 200;
-            //         y = displayHeight - Allplayers[1].distance-25;
-            //         cars[1].x = x;
-            //         cars[1].y = y;
-
-            //         x += 200;
-            //         y = displayHeight - Allplayers[2].distance-25;
-            //         cars[2].x = x;
-            //         cars[2].y = y;
-
-            //         x += 200;
-            //         y = displayHeight - Allplayers[3].distance-25;
-            //         cars[3].x = x;
-            //         cars[3].y = y;
-
-            //         x += 200;
-            //         y = displayHeight - Allplayers[4].distance-25;
-            //         cars[4].x = x;
-            //         cars[4].y = y;
-
-            //         x = 100;
-
-            //         drawSprites();
-            //     }
         }
 
         if(keyIsDown(UP_ARROW) && player.index!= null && gameState ==1)
         {
             player.distance+=100;
-            console.log(player.distance)
             player.updateName();
         }
     }
