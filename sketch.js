@@ -5,7 +5,7 @@ var reset;
 var bg1,bg2;
 var car1, car2, car3, car4, cars = [];
 var car1Img,car2Img,car3Img,car4Img;
-var resetCond;
+var resetCond, carSoundEffect;
 
 function preload()
 {
@@ -15,6 +15,7 @@ function preload()
     car2Img = loadImage("images/car2.png");
     car3Img = loadImage("images/car3.png");
     car4Img = loadImage("images/car4.png");
+    carSoundEffect = loadSound("carDriving.mp3");
 }
 
 function setup()
@@ -62,7 +63,8 @@ function draw()
             
         game.update(0);
         database.ref('/').update({
-            'players': null
+            'players': null,
+            'rank': 0
         })
 
         background(bg1);
@@ -79,7 +81,7 @@ function draw()
 
     if(gameState == 1)
     {
-        game.play();
+        game.playGame();
 
         car1.visible = true;
         car2.visible = true;
@@ -90,30 +92,27 @@ function draw()
     if(player.distance >= 3660)
     {
         game.update(2);
+
+        // if(player.flag == false)
+        // {
+        //     player.rank++;
+        //     Player.updateRank(player.rank);
+
+        //     console.log(player.rank);
+        // }
+
+        player.rank++;
+        Player.updateRank(player.rank);
+        
         player.flag = true;
         player.updateName();
+
         fill("yellow");
         textSize(20);
         stroke("black");
-        text("Player"+player.index +" won!",camera.position.x,camera.position.y);
+        text("Player"+player.index +" got"+player.rank+" place",camera.position.x,camera.position.y);
         text("please wait for other players to finish",camera.position.x,camera.position.y+50);
     }
-
-    // for(let i in Allplayers)
-    // {
-    //     console.log(Allplayers[i].flag);
-    // }
-
-    // if(Allplayers[1].flag != null &&
-    //     Allplayers[2].flag != null &&
-    //     Allplayers[3].flag != null &&
-    //     Allplayers[4].flag != null)
-    //     {
-    //         console.log(Allplayers[1].flag);
-    //         console.log(Allplayers[2].flag);
-    //         console.log(Allplayers[3].flag);
-    //         console.log(Allplayers[4].flag);
-    //     }
 }
 
 function keyPressed()
@@ -126,8 +125,16 @@ function keyPressed()
             resetCond++;
         }
     }
-    if(gameState == 2 && resetCond == 4)
+    if(gameState == 1 && resetCond == 4)
     {
+        var yPos = camera.position.y;
+
+        for(let i in Allplayers)
+        {
+            yPos += 50;
+            text("player" + i+"'s rank: "+Allplayers[i].rank,camera.position.x,yPos);
+        }
+
         // text("press 'r' to play again",camera.position.x,camera.position.y+100);
 
         // if(keyCode == 114 || keyCode == 82)
